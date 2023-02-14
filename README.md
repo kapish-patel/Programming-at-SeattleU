@@ -23,7 +23,7 @@ This repository contains assignments and projects that I have worked on while st
 <br />
 <br />
 
-# Courses
+## Courses
 <table align="center">
   <tr>
     <th>Course Code</th>

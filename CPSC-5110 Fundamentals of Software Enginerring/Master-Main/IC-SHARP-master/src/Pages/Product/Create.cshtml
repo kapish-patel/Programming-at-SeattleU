@@ -1,0 +1,47 @@
+﻿@page
+@model ContosoCrafts.WebSite.Pages.Product.CreateModel
+@{
+    ViewData["Title"] = "Create Page";
+}
+<div class="update">
+    <h1>Create Data</h1>
+    <div class="container">
+        <form method="post">
+
+            <div class="form-group">
+                <label asp-for="Product.Title" class="control-label"></label>
+                <input asp-for="Product.Title" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.Description" class="control-label"></label>
+                <textarea asp-for="Product.Description" class="form-control" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.Image" class="control-label"></label>
+                <input asp-for="Product.Image" class="form-control" required type="url" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.Maker" class="control-label"></label>
+                <input asp-for="Product.Maker" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.MakerEmail" class="control-label"></label>
+                <input asp-for="Product.MakerEmail" class="form-control" required type="email"/>
+            </div>
+
+            <div class="form-group glow">
+                <label asp-for="Product.Price" class="control-label"></label>
+                <input asp-for="Product.Price" class="form-control" required type="number" step="0.01" />
+            </div>
+            <br />
+            <br />
+            <br />
+            <button type="submit" class="btn-create" />Save
+            <br />
+        </form>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+﻿
+@page
+@using ContosoCrafts.WebSite.Components
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<form method="get">
+    <form method="get">
+        <div class="search">
+            <input class="search-input" asp-for="SearchString" placeholder="Search Profession"/>
+            <button class="btn-create" type="submit">Search</button>
+        </div>
+    </form>
+</form>
+
+@(await Html.RenderComponentAsync<ProductList>(RenderMode.ServerPrerendered))
+
+<script src="_framework/blazor.server.js"></script>

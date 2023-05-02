@@ -1,0 +1,11 @@
+﻿
+@page
+@using ContosoCrafts.WebSite.Components
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div>Team-IC#</div>
+@(await Html.RenderComponentAsync<ProductList>(RenderMode.ServerPrerendered))
+
+<script src="_framework/blazor.server.js"></script>

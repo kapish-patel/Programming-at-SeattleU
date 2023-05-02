@@ -1,0 +1,26 @@
+﻿@page "{id}"
+@using ContosoCrafts.WebSite.Services
+@inject JsonFileProductService ProductService
+@model ContosoCrafts.WebSite.Pages.Product.ReadModel
+@{
+    ViewData["title"] = "Read Page";
+}
+
+<div class="Content">
+    <div class="card-read">
+        <h1 class="title"> @Model.Product.Title </h1>
+        <br>
+        <img class="card-img" src="@Model.Product.Image" alt="Image for @Model.Product.Title" width="300" height="600">
+
+        <p class="card-text">Name:  @Model.Product.Maker </p>
+
+        <p class="card-text">Email: @Model.Product.MakerEmail </p>
+
+        <p class="card-text"> @Model.Product.Description </p>
+
+        <p class="card-text">Price: @Model.Product.Price </p>
+
+        <a asp-page="Delete" asp-route-id="@Model.Product.Id" class="btn btn-danger btn-lg">Delete</a>
+        <br>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@page
+@model ContosoCrafts.WebSite.Pages.Product.IndexModel
+@{
+}
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClickAway</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="container">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th colspan="2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td>@product.Title</td>
+                        <td><a asp-page="Product/Read" asp-route-id="@product.Id">Read</a></td>
+                        <td><a asp-page="Product/Update" asp-route-id="@product.Id">Update</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <footer class="border-top footer text-muted bg-footer">
+        <div class="container">
+            © 2019 - ContosoCrafts.WebSite - <a href="/Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="/js/site.js?v=dLGP40S79Xnx6GqUthRF6NWvjvhQ1nOvdVSwaNcgG18"></script>
+</body>
+</html>

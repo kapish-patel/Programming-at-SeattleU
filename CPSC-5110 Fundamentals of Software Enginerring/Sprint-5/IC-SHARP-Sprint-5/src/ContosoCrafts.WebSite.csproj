@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\NewFolder\**" />
+    <Content Remove="Pages\NewFolder\**" />
+    <EmbeddedResource Remove="Pages\NewFolder\**" />
+    <None Remove="Pages\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\professions.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Product\Create.cshtml" />
+    <Content Remove="Pages\professions.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\data\products.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4data_4products_1json__JsonSchema="https://docs.renovatebot.com/renovate-schema.json" /></VisualStudio></ProjectExtensions>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Product\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Product\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Product\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
+</Project>

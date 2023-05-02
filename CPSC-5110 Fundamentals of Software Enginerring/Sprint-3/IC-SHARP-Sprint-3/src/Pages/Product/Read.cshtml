@@ -1,0 +1,33 @@
+﻿@page "{id}"
+@using ContosoCrafts.WebSite.Services
+@inject JsonFileProductService ProductService
+@model ContosoCrafts.WebSite.Pages.Product.ReadModel
+@{
+    ViewData["title"] = "Read Page";
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClickAway</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="Content">
+        <h5 class="title"> @Model.Product.Title </h5>
+        
+        <img class="card-img" src="@Model.Product.Image" alt="Image for @Model.Product.Title">
+
+        <p class="card-text"> @Model.Product.Maker </p>
+
+        <p class="card-text"> @Model.Product.Description </p>
+
+        <p class="card-text"> @Model.Product.Price </p>
+    </div>
+</body>
+</html>

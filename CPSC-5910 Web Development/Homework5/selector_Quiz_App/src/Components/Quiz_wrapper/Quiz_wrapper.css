@@ -1,0 +1,22 @@
+.Quiz_wrapper_container{
+    align-self: center;
+    width: 1280px;
+    height: 100%;
+    border: 1px black solid;
+    padding: 10px;
+    display:flex;
+    flex-direction: column;
+    border-radius: 10px;
+    margin: 10px;
+    background-color: #F8F1F1;
+}
+
+@media (max-width: 600px) {
+    .Quiz_wrapper_container {
+      width: 100%; /* Adjust the width as needed for smaller screens */
+      height: auto;
+      padding: 5px; /* Change the padding for smaller screens */
+      margin: 10px;
+      /* Add any other style adjustments for smaller screens */
+    }
+  }

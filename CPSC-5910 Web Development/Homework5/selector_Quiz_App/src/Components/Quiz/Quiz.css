@@ -1,0 +1,16 @@
+.Quiz_container{
+    width: 60%;
+    border: 1px black solid;
+    border-radius: 10px;
+    margin-right: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 600px) {
+    .Quiz_container {
+      width: auto; /* Set width to auto for smaller screens */
+      height: auto;
+    }
+  }

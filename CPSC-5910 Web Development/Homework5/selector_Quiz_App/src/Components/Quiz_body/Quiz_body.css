@@ -1,0 +1,14 @@
+.Quiz_body_container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+    .Quiz_body_container {
+      flex-direction: column;
+    }
+  }

@@ -1,0 +1,17 @@
+.Branding_container{
+    width: 100vw;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Branding_container img{
+    height: 90px;
+    width: 90px;
+    margin: 5px;
+}
+
+.theme-switch {
+    height: 50px;
+}

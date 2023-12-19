@@ -1,0 +1,14 @@
+.Quiz_explaination_container{
+    width: 40%;
+    border: 1px black solid;
+    margin-left: 5px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+@media (max-width: 600px) {
+    .Quiz_explaination_container {
+        margin-top: 10px; /* Adjust the padding for smaller screens */
+        width: auto;
+    }
+  }

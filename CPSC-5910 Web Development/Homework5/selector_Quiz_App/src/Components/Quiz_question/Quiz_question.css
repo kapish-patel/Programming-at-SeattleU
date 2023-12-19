@@ -1,0 +1,31 @@
+.Quiz_question_component{
+    height: 50%;
+    font-family: monospace;
+}
+
+.question_elements{
+    cursor: pointer;
+    display: inline-block;
+
+}
+
+.question_elements:hover{
+    border: 1px black solid;
+}
+
+@media (max-width: 600px) {
+    .Quiz_question_component{
+        height: fit-content;
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+    }        
+}
+
+@media (max-width: 600px) {
+    .question_elements {
+      flex-direction: column;
+      height: fit-content;
+      width: fit-content;
+    }
+  }

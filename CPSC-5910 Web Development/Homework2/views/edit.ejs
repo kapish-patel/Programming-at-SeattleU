@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Details</title>
+</head>
+<body>
+    <h1>Update this Document</h1>
+    <form>
+        <label for="title">Document Title:</label>
+        <input type="text" id="title" name="title" value="<%= item.title %>" required><br><br>
+
+        <label for="content">Document Content:</label><br>
+        <textarea id="content" name="description" rows="4" cols="50" required><%= item.description %></textarea><br><br>
+
+        <button onclick="call_Update()">Update Document</button>
+    </form>
+</body>
+<script>
+    async function call_Update() {
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('content').value;
+            const result = await fetch(`/document/<%= item._id %>`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        description: description
+                    })
+                });
+            if(result.ok) window.location = '/';
+        }
+</script>
+</html>

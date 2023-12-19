@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    background-color: #001d2a;
+}  
+#start-btn {
+    text-align: center;
+    display: inline-block;
+    margin: 5px;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #8fde5d;
+    color: #fff7f8;
+    border-radius: 7px;
+    box-shadow: 0 .2em whitesmoke;
+    cursor: pointer;
+    font-family: 'Press Start 2P';
+    text-shadow: 1px 1px 10px black ;
+  }
+  
+#start-btn:active {
+box-shadow: none;
+position: relative;
+top: .2em;
+}  
+
+#stop-btn {
+    text-align: center;
+    display: inline-block;
+    margin: 5px;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #ff4f69;
+    color: #fff7f8;
+    border-radius: 7px;
+    box-shadow: 0 .2em whitesmoke;
+    cursor: pointer;
+    font-family: 'Press Start 2P';
+    text-shadow: 1px 1px 10px black ;
+  }
+  
+#stop-btn:active {
+box-shadow: none;
+position: relative;
+top: .2em;
+}  
+
+#reset-btn {
+    text-align: center;
+    display: inline-block;
+    margin: 5px;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #ffda45;
+    color: #fff7f8;
+    border-radius: 7px;
+    box-shadow: 0 .2em whitesmoke;
+    cursor: pointer;
+    font-family: 'Press Start 2P';
+    text-shadow: 1px 1px 10px black ;
+  }
+  
+#reset-btn:active {
+box-shadow: none;
+position: relative;
+top: .2em;
+}  
+
+#submit-btn {
+    text-align: center;
+    display: inline-block;
+    margin: 5px;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #3368dc;
+    color: #fff7f8;
+    border-radius: 7px;
+    box-shadow: 0 .2em whitesmoke;
+    cursor: pointer;
+    font-family: 'Press Start 2P';
+    text-shadow: 1px 1px 10px black ;
+  }
+  
+#submit-btn:active {
+box-shadow: none;
+position: relative;
+top: .2em;
+}  
+
+
+
+
+.cell{
+    height: 12px;
+    width: 12px;
+    border: 1px solid grey;
+}
+
+/* Grid Container */
+.grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 30px; /* Remove the default margin */
+}
+
+
+.grid-cell-alive{
+    width: 16px;
+    height: 16px;
+    background-color: #f2ff66;
+    border: 1px dashed #001d2a;
+}
+
+.grid-cell-dead{
+    width: 16px;
+    height: 16px;
+    background-color: #38d88e;
+    border: 1px solid #001d2a;
+    ;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Fixed Navbar */
+.navbar {
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    padding-top: 60px; /* Adjust the value based on your navbar height */
+}
+
+.navbar input[type="text"], .navbar button {
+    margin: 0 10px; /* Add some margin between input and button elements */
+}
+
+/* Hover effect on buttons */
+.navbar button:hover {
+    background-color: #555; /* Darker background color on hover */
+    cursor: pointer;
+}
+
+/* Transition effect for smooth hover animations */
+.navbar button {
+    transition: background-color 0.3s ease;
+}
+
+.retro-textbox {
+    border: 4px solid #fff;
+    padding: 10px;
+    background-color: #000;
+    width: 200px;
+    text-align: center;
+    margin-left: 10px;
+    color: #fff;
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 16px;
+}
+
+.input-container label {
+    margin-right: 10px;
+    color: #fff;
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 16px;
+}
+
+

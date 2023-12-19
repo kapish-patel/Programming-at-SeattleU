@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Objects</title>
+</head>
+<body>
+    <h1>Document Objects:</h1>
+    <form action="/documents" method="get">
+        <button type="submit">New Document</button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Last Updated</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% all_Items.forEach(function(item) { %>
+                <tr>
+                    <td><a href="/document/<%= item._id %>"><%= item.title %></a></td>
+                    <td><%= item.description %></td>
+                    <td><%= item.last_Update %></td>
+                    <td><button onclick="window.location = '/document/<%= item._id%>/modify'" >Edit</button></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

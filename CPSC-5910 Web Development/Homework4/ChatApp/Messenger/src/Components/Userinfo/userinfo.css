@@ -1,0 +1,12 @@
+
+.Userinfo_container {
+    display: flex;
+    flex-direction: column;
+    background-color: #3498db; /* Blue background color */
+    justify-content: space-between;
+    height: 10%;
+    padding: 15px; /* Add padding for spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #fff; /* Text color */
+    border-top-left-radius: 10px;
+  }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>conway's game of life</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="input-container">
+            <label for="height-input">Height</label>
+            <input type="text" id="height-input" class="retro-textbox" placeholder="Enter height">
+        
+            <label for="width-input">Width</label>
+            <input type="text" id="width-input"  class="retro-textbox" placeholder="Enter width">
+        </div>
+        <div class="button-container">
+            <button id="submit-btn">Submit</button>
+            <button id="start-btn">Start</button>
+            <button id="stop-btn">Stop</button>
+            <button id="reset-btn">Reset</button>
+        </div>
+    </div>
+    
+    <div class="grid-container" id="gridcontainer"></div>
+    <script src="app.js"></script>
+</body>
+</html>

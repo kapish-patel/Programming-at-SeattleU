@@ -95,6 +95,19 @@ def postOrder_traversal(root):
     
     r_DFS(root)
 
+# flattening tree
+def flat_it(root):
+    class node:
+        def __init__(self,value = None) -> None:
+            self.value = value
+            self.next
+    class ll:
+        def __init__(self) -> None:
+            self.head = node()
+        
+        def addval(value):
+            self.next = node(value)
+
 
 #=============
 # Driver code
@@ -170,9 +183,9 @@ def main():
     small_tree_root = create_small_tree()
     big_tree_root = create_big_tree()
     #stack_intuition(small_tree_root)
-    inorder_traversal(small_tree_root)
-    preorder_traversal(small_tree_root)
-    postOrder_traversal(small_tree_root)
+    # inorder_traversal(small_tree_root)
+    # preorder_traversal(small_tree_root)
+    # postOrder_traversal(small_tree_root)
 
 if __name__ == "__main__":
     # Create a sample tree

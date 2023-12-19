@@ -1,0 +1,18 @@
+.Editbtn_container {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .Editbtn_container > button {
+    background-color: green;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .Editbtn_container > button:hover {
+    background-color: darkgreen;
+  }

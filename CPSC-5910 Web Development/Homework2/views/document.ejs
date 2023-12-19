@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Details</title>
+</head>
+    <h1>Document Title</h1>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Last Update</th>
+            <th>Delete</th>
+        </tr>
+        <tr>
+            <td><%= item.title %></td>
+            <td><%= item.description %></td>
+            <td><%= item.last_Update %></td>
+            <td><button onclick="calldelete()">Delete</button>
+        </tr>
+    </table>
+    <script>
+        async function calldelete() {
+            const result = await fetch('/document/<%= item._id %>', {
+                method: 'DELETE',
+            })
+            if(result.ok) window.location = '/';
+        }
+    </script>
+</body>
+</html>

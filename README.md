@@ -45,7 +45,16 @@ This repository contains assignments and projects that I have worked on while st
     <td>Parallel Computing</td>
     <td>Winter 2023</td>
   </tr>
+  <tr>
+    <td><a href="./CPSC-5240 Software as a Service">CPSC 5240</a></td>
+    <td>Software as a Service</td>
+    <td>Spring 2023</td>
+  </tr>
+  <tr>
+    <td><a href="./CPSC-5910 Web Development">CPSC 5910</a></td>
+    <td>Web Development</td>
+    <td>Fall 2023</td>
+  </tr>
 </table>
-
 
 #

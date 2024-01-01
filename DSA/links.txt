@@ -1,5 +1,0 @@
-DFS (medium article) ->  https://medium.com/leetcode-patterns/leetcode-pattern-1-bfs-dfs-25-of-the-problems-part-1-519450a84353
-
-BFS (medium article) ->  https://medium.com/leetcode-patterns/leetcode-pattern-2-dfs-bfs-25-of-the-problems-part-2-a5b269597f52
-
-trees question solving patterns (medium article) -> https://medium.com/@timpark0807/leetcode-is-easy-binary-tree-patterns-1-2-6e1793b76415s

@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Healthfy',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyanAccent),
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -28,8 +27,8 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Healthfy"),
-        backgroundColor: Colors.cyanAccent,
+        title: const Text("Healthfy", style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color.fromRGBO(7, 59, 76, 1),
       ),
       body: const Pagination(),
     );
@@ -58,18 +57,20 @@ class EmotionRecorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: <Widget>[
-        EmojiSection(),
-        EmotionListSection()
-      ],
+    return Container( 
+      color: const Color.fromRGBO(17, 138, 178, 1),
+      child: const Column(
+        children: <Widget>[
+          EmojiSection(),
+          EmotionListSection()
+        ],
+      )
     );
   }
 }
 
 class EmojiSection extends StatefulWidget {
   const EmojiSection({super.key});
-
 
   @override
   EmojiGridSectionState createState() {
@@ -105,22 +106,55 @@ class EmojiGridSectionState extends State<EmojiSection>{
     "🤩": "Starstruck",
   };
 
+  //function to handle emoji tap
+  void _onEmojiTap(String emoji) {
+    print("User pressed $emoji and is feeling ${emojiExpressions[emoji]}");
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Wrap(
         spacing: 8.0, // h space
         runSpacing: 8.0, // v space
         children: List<Widget>.from(
-          emojiExpressions.keys.map((emoji) => DisplayCustomEmoji(data: emoji))
+          emojiExpressions.keys.map((emoji) => DisplayCustomEmoji(data: emoji, onTap: () => _onEmojiTap(emoji)))
         ),
       ),
     );
   }
 }
 
+class DisplayCustomEmoji extends StatelessWidget {
+  final String data;
+  final VoidCallback onTap;
+  
+
+  const DisplayCustomEmoji({
+    required this.data,
+    required this.onTap(),
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0)
+        ),
+        child: Text(
+          data, 
+          style: const TextStyle(fontSize: 30.0)
+        )
+      ),
+    );
+  }
+}
 class EmotionListSection extends StatefulWidget{
   const EmotionListSection({super.key});
 
@@ -139,21 +173,6 @@ class EmotionListSectionState extends State<EmotionListSection> {
   }
 }
 
-
-class DisplayCustomEmoji extends StatelessWidget {
-  final String data;
-
-  const DisplayCustomEmoji({
-    required this.data,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(child: Text(data, style: const TextStyle(fontSize: 30.0)));
-  }
-}
-
 class DietRecorder extends StatefulWidget {
   const DietRecorder({super.key});
 
@@ -168,66 +187,84 @@ class DietRecorderState extends State<DietRecorder> {
 
   final TextEditingController mealNameController = TextEditingController();
   final TextEditingController mealQuantityController = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
-          TextFormField(
-            controller: mealNameController,
-            decoration: const InputDecoration(labelText: 'Meal Name'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Enter a Valid Meal Name';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: mealQuantityController,
-            decoration: const InputDecoration(labelText: 'Meal Quantity'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Enter a Valid Meal Quantity';
-              }
-              // You can add more validation logic for quantity if needed
-              return null;
-            },
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                // Process the inputs, for example, save to a database
-                String mealName = mealNameController.text;
-                String mealQuantity = mealQuantityController.text;
-                print('Meal name: $mealName');
-                print('MealQuantity: $mealQuantity');
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(6, 214, 160, 1),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Card(
+              color: Colors.white,  // Card color is white
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        controller: mealNameController,
+                        decoration: const InputDecoration(labelText: 'Meal Name'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please Enter a Valid Meal Name';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: mealQuantityController,
+                        decoration: const InputDecoration(labelText: 'Meal Quantity'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please Enter a Valid Meal Quantity';
+                          }
+                          // You can add more validation logic for quantity if needed
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  // Process the inputs, for example, save to a database
+                  String mealName = mealNameController.text;
+                  String mealQuantity = mealQuantityController.text;
+                  print('Meal name: $mealName');
+                  print('MealQuantity: $mealQuantity');
 
-                // Clear the input field
-                mealNameController.clear();
-                mealQuantityController.clear();
+                  // Clear the input field
+                  mealNameController.clear();
+                  mealQuantityController.clear();
 
-                // Notify the user using snackbar notification
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Successfully submitted Data!'),
-                ));
-              }
-            },
-            child: const Text('Submit'),
-          ),
-        ],
+                  // Notify the user using snackbar notification
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Successfully submitted Data!'),
+                  ));
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
 class WorkoutRecorder extends StatelessWidget {
   const WorkoutRecorder({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Workout Recorder");
+    return Container(
+      color: const Color.fromRGBO(239, 71, 111, 1),
+      child: const Text("Workout Recorder"),
+    ); 
   }
 }

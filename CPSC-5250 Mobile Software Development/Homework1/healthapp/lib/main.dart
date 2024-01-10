@@ -165,11 +165,51 @@ class EmotionListSection extends StatefulWidget{
 }
 
 class EmotionListSectionState extends State<EmotionListSection> {
-  final String data = "this is Emotion list section";
+  final Map<String, String> emotionList = {
+    'kapish': 'asdasd',
+    'kapish2': 'asdasd2',
+    'kapish3': 'asdasd3',
+    'kapish4': 'asdasd4',
+    'kapish5': 'asdasd5', 
+  } ;
 
   @override
   Widget build(BuildContext context) {
-    return Text(data);
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        children: [
+          Column(
+            children: List<Widget>.from(
+              emotionList.keys.map((emoji) => EmotionList(data: emoji))
+            )
+          ),
+        ],
+      )
+    );
+  }
+}
+
+class EmotionList extends StatelessWidget {
+  final String data;
+  const EmotionList({
+    required this.data,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Card(
+        child: ListTile(
+          leading: const Icon(Icons.emoji_emotions_outlined),
+          title: Text(data),
+          subtitle: const Text('Subtitle'),
+          trailing: const Icon(Icons.more_vert),
+        ),
+      ),
+    );
   }
 }
 

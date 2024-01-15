@@ -56,9 +56,8 @@ class EmojiGridSectionState extends State<EmojiSection>{
     "🤩": "Starstruck",
   };
 
-  //function to handle emoji tap
-  void _onEmojiTap(String emoji) {
-    print("User pressed $emoji and is feeling ${emojiExpressions[emoji]}");
+  void _ontapEmoji(String emoji) {
+    print("Emoji $emoji tapped");
   }
 
   @override
@@ -69,39 +68,45 @@ class EmojiGridSectionState extends State<EmojiSection>{
         spacing: 8.0, // h space
         runSpacing: 8.0, // v space
         children: List<Widget>.from(
-          emojiExpressions.keys.map((emoji) => DisplayCustomEmoji(data: emoji, onTap: () => _onEmojiTap(emoji)))
+          emojiExpressions.keys.map((emoji) => GestureDetector(
+            onTap: () => _ontapEmoji(emoji),
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0)
+              ),
+              child: Text(emoji, 
+                style: const TextStyle(fontSize: 30.0)
+              )
+            )
+          ), 
         ),
       ),
+    )
     );
   }
 }
 
 class DisplayCustomEmoji extends StatelessWidget {
   final String data;
-  final VoidCallback onTap;
-  
 
   const DisplayCustomEmoji({
     required this.data,
-    required this.onTap(),
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return Container(
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0)
         ),
-        child: Text(
-          data, 
+        child: Text(data, 
           style: const TextStyle(fontSize: 30.0)
         )
-      ),
     );
   }
 }
@@ -115,6 +120,8 @@ class EmotionListSection extends StatefulWidget{
 }
 
 class EmotionListSectionState extends State<EmotionListSection> {
+  
+  //mock data
   final Map<String, List<String>> emotionList = {
     "😊": ["Happy", "1-1-1"],
     "😢": ["Sad", "1-1-1"],
@@ -124,11 +131,15 @@ class EmotionListSectionState extends State<EmotionListSection> {
     "😐": ["Neutral","1-1-1"],
     "😡": ["Angry","1-1-1"],
     "😴": ["Sleepy","1-1-1"],
-    "🥳": ["Celebrating","1-1-1"],
-    "🤔": ["Thinking","1-1-1"],
-    "😇": ["Angel","1-1-1"],
     "😈": ["Devilish","1-1-1"],
+    
   } ;
+
+  void addnewEmotion(String emoji, String emotion, String date) {
+    setState(() {
+      emotionList[emoji] = [emotion, date];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

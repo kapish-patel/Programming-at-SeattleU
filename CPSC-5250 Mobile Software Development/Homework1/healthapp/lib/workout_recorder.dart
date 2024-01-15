@@ -82,7 +82,7 @@ class WorkoutRecorderSectionState extends State<WorkoutRecorderSection>{
     "⚽": ["Football","1-1-1"],
     "🏐": ["Volleyball","1-1-1"],
     "🏈": ["American Football","1-1-1"],
-    "🎾": ["Ten,""1-1-1"],
+    "🎾": ["Ten","1-1-1"],
   };
   @override
   Widget build(BuildContext context) {
@@ -96,9 +96,6 @@ class WorkoutRecorderSectionState extends State<WorkoutRecorderSection>{
             key: _formKey,
             child: Column(
               children: <Widget>[
-
-
-                // start working here 
                 DropdownButton(
                   value: dropdownValue,
                   items: exerciseList.entries.map((e) {
@@ -111,6 +108,7 @@ class WorkoutRecorderSectionState extends State<WorkoutRecorderSection>{
                   onChanged: (String? newValue) {
                     setState(() {
                       dropdownValue = newValue!;
+                      workoutNameController.text = exerciseList[newValue]![0];
                     });
                   },
                 ),

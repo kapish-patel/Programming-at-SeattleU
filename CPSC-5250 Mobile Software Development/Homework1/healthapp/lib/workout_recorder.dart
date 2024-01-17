@@ -23,18 +23,18 @@ class WorkoutListSection extends StatelessWidget {
   
   //mock data for now
   final Map<String, List<String>> exerciseList = {
-    "🏋️‍♀️": ["Workout", "1-1-1"],
-    "🏃‍♀️": ["Running", "1-1-1"],
-    "🚴‍♀️": ["Cycling","1-1-1"],
-    "🏊‍♀️": ["Swimming","1-1-1"],
-    "🧘‍♀️": ["Yoga","1-1-1"],
-    "🏸": ["Badminton","1-1-1"],
-    "🏓": ["Table Tennis","1-1-1"],
-    "🏀": ["Basketball","1-1-1"],
-    "⚽": ["Football","1-1-1"],
-    "🏐": ["Volleyball","1-1-1"],
-    "🏈": ["American Football","1-1-1"],
-    "🎾": ["Ten","1-1-1"],
+    "🏋️‍♀️": ["Workout", "1-1-1, 12:00:PM"],
+    "🏃‍♀️": ["Running", "1-1-1, 12:00:PM"],
+    "🚴‍♀️": ["Cycling","1-1-1, 12:00:PM"],
+    "🏊‍♀️": ["Swimming","1-1-1, 12:00:PM"],
+    "🧘‍♀️": ["Yoga","1-1-1, 12:00:PM"],
+    "🏸": ["Badminton","1-1-1, 12:00:PM"],
+    "🏓": ["Table Tennis","1-1-1, 12:00:PM"],
+    "🏀": ["Basketball","1-1-1, 12:00:PM"],
+    "⚽": ["Football","1-1-1, 12:00:PM"],
+    "🏐": ["Volleyball","1-1-1, 12:00:PM"],
+    "🏈": ["American Football","1-1-1, 12:00:PM"],
+    "🎾": ["Ten","1-1-1, 12:00:PM"],
   };
 
   @override
@@ -71,18 +71,18 @@ class WorkoutRecorderSectionState extends State<WorkoutRecorderSection>{
   String dropdownValue = "🏋️‍♀️";
 
   final Map<String, List<String>> exerciseList = {
-    "🏋️‍♀️": ["Workout", "1-1-1"],
-    "🏃‍♀️": ["Running", "1-1-1"],
-    "🚴‍♀️": ["Cycling","1-1-1"],
-    "🏊‍♀️": ["Swimming","1-1-1"],
-    "🧘‍♀️": ["Yoga","1-1-1"],
-    "🏸": ["Badminton","1-1-1"],
-    "🏓": ["Table Tennis","1-1-1"],
-    "🏀": ["Basketball","1-1-1"],
-    "⚽": ["Football","1-1-1"],
-    "🏐": ["Volleyball","1-1-1"],
-    "🏈": ["American Football","1-1-1"],
-    "🎾": ["Ten","1-1-1"],
+    "🏋️‍♀️": ["Workout"],
+    "🏃‍♀️": ["Running"],
+    "🚴‍♀️": ["Cycling"],
+    "🏊‍♀️": ["Swimming"],
+    "🧘‍♀️": ["Yoga"],
+    "🏸": ["Badminton"],
+    "🏓": ["Table Tennis"],
+    "🏀": ["Basketball"],
+    "⚽": ["Football"],
+    "🏐": ["Volleyball"],
+    "🏈": ["American Football"],
+    "🎾": ["Ten"],
   };
   @override
   Widget build(BuildContext context) {
@@ -132,6 +132,7 @@ class WorkoutRecorderSectionState extends State<WorkoutRecorderSection>{
                       String workoutDuration = workoutDurationController.text;
                       print('Workout name: $workoutName');
                       print('Workout Duration: $workoutDuration');
+                      print('Workout Time: ${DateTime.now()}');
 
                       // Clear the input field
                       workoutNameController.clear();

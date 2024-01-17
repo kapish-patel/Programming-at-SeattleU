@@ -57,7 +57,8 @@ class EmojiGridSectionState extends State<EmojiSection>{
   };
 
   void _ontapEmoji(String emoji) {
-    print("Emoji $emoji tapped");
+    print("Emoji: $emoji");
+    print("Time: ${DateTime.now()}");
   }
 
   @override
@@ -123,15 +124,15 @@ class EmotionListSectionState extends State<EmotionListSection> {
   
   //mock data
   final Map<String, List<String>> emotionList = {
-    "😊": ["Happy", "1-1-1"],
-    "😢": ["Sad", "1-1-1"],
-    "😂": ["Laughing","1-1-1"],
-    "😍": ["In Love","1-1-1"],
-    "😎": ["Cool","1-1-1"],
-    "😐": ["Neutral","1-1-1"],
-    "😡": ["Angry","1-1-1"],
-    "😴": ["Sleepy","1-1-1"],
-    "😈": ["Devilish","1-1-1"],
+    "😊": ["Happy", "1-1-1, 12:00:PM"],
+    "😢": ["Sad", "1-1-1, 12:00:PM"],
+    "😂": ["Laughing","1-1-1, 12:00:PM"],
+    "😍": ["In Love","1-1-1, 12:00:PM"],
+    "😎": ["Cool","1-1-1, 12:00:PM"],
+    "😐": ["Neutral","1-1-1, 12:00:PM"],
+    "😡": ["Angry","1-1-1, 12:00:PM"],
+    "😴": ["Sleepy","1-1-1, 12:00:PM"],
+    "😈": ["Devilish","1-1-1, 12:00:PM"],
     
   } ;
 

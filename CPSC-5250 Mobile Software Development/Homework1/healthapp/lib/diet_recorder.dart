@@ -75,6 +75,7 @@ class DietRecorderState extends State<DietRecorder> {
                   String mealQuantity = mealQuantityController.text;
                   print('Meal name: $mealName');
                   print('MealQuantity: $mealQuantity');
+                  print('Meal Time: ${DateTime.now()}');
 
                   // Clear the input field
                   mealNameController.clear();

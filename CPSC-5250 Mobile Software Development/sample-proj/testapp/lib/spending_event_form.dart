@@ -15,8 +15,8 @@ class SpendingEventForm extends StatelessWidget {
         title: const Text('Budgetify', style: TextStyle(color: Colors.grey, fontSize: 24)),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body:SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             children: [
               const Text('Add Event Form',

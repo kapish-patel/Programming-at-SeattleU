@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:testapp/spending_event.dart';
 
+// start working here bcz I have to make the stateful widget 
 class SpendingEventForm extends StatelessWidget {
+  SpendingEventForm({Key? key, required this.addSpendingEvent}) : super(key: key);
+
+  final void Function(SpendingEvent event) addSpendingEvent;
+
+  final TextEditingController merchanttextcontroller = TextEditingController();
+  final TextEditingController categorytextcontroller = TextEditingController();
+  final TextEditingController amounttextcontroller = TextEditingController();
+  final TextEditingController datetextcontroller = TextEditingController();
   
-  const SpendingEventForm({Key? key}) : super(key: key);
 
   void _onclick() {
-    print("Button clicked");
+    addSpendingEvent(SpendingEvent(merchant: "test", amount: 1.0, date: DateTime.now(), category: "test"));
   }
 
   @override
@@ -27,6 +36,7 @@ class SpendingEventForm extends StatelessWidget {
               ),            
               const Text("Merchant"),
               const TextField(
+                controller: merchanttextcontroller,
                 decoration: InputDecoration(
                   labelText: 'Enter Merchant',
                 ),
@@ -44,6 +54,7 @@ class SpendingEventForm extends StatelessWidget {
                       width: 200,
                       height: 100,
                       child: TextField(
+                        controller: amounttextcontroller,
                         decoration: InputDecoration(
                           labelText: 'Enter Amount',
                         ),
@@ -56,6 +67,7 @@ class SpendingEventForm extends StatelessWidget {
               const Text("Date"),
               const TextField(
                 keyboardType: TextInputType.datetime,
+                controller: datetextcontroller,
                 decoration: InputDecoration(
                   labelText: 'Enter Date',
                 ),

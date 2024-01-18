@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './spending_event_form.dart';
+import 'package:testapp/spending_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 28, 148, 68)),
         useMaterial3: true,
       ),
-      home: const SpendingEventForm(),
+      home: const SpendingPage(),
     );
   }
 }

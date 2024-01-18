@@ -11,31 +11,59 @@ class SpendingEventForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const Text('Add Event Form', style: TextStyle(fontSize: 24)),
-            
-            const Text("Merchant"),
-            const TextField(),
-            
-            const Text("Category"),
-            const DropdownMenu(dropdownMenuEntries: []),
-
-            const Text("Amount"),
-            const TextField(
-              keyboardType: TextInputType.number,
-            ),
-
-            const Text("Date"),
-            const TextField(
-              keyboardType: TextInputType.datetime,
-            ),
-
-            ElevatedButton(onPressed: _onclick, child: const Text("Submit"))
-
-          ],
-        )
+      appBar: AppBar(
+        title: const Text('Budgetify', style: TextStyle(color: Colors.grey, fontSize: 24)),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              const Text('Add Event Form',
+                style: TextStyle(
+                  fontSize: 24, 
+                  color: Colors.redAccent
+                )
+              ),            
+              const Text("Merchant"),
+              const TextField(
+                decoration: InputDecoration(
+                  labelText: 'Enter Merchant',
+                ),
+              ),
+              const Text("Category"),
+              const DropdownMenu(dropdownMenuEntries: []),
+              const SizedBox(
+                height: 200,
+                width: 300,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text("Amount: "),
+                    SizedBox(
+                      width: 200,
+                      height: 100,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Enter Amount',
+                        ),
+                        keyboardType: TextInputType.number,
+                      )
+                    ),
+                  ],
+                ),
+              ),
+              const Text("Date"),
+              const TextField(
+                keyboardType: TextInputType.datetime,
+                decoration: InputDecoration(
+                  labelText: 'Enter Date',
+                ),
+              ),
+              ElevatedButton(onPressed: _onclick, child: const Text("Submit"))
+            ],
+          )
+        ),
       ),
     );
   }

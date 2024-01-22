@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthapp/card_list.dart';
+import 'package:healthapp/old/card_list.dart';
 
 class WorkoutRecorder extends StatelessWidget {
   const WorkoutRecorder({super.key});

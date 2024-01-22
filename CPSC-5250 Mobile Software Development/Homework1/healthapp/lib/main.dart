@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:healthapp/emotion_recorder.dart';
-import 'package:healthapp/diet_recorder.dart';
-import 'package:healthapp/workout_recorder.dart';
-
+import 'package:healthapp/diet_recorder_page.dart';
+import 'package:healthapp/workout_recorder_page.dart';
+import 'package:healthapp/emotion_recorder_page.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -23,70 +22,58 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  @override
+  MyHomePageState createState() => MyHomePageState();
+}
+class MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Healthfy", style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromRGBO(7, 59, 76, 1),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(25),
+        child: AppBar(
+          title: const Text("Healthfy", style: TextStyle(color: Colors.white,)),
+          centerTitle: true, 
+          backgroundColor: const Color.fromRGBO(7, 59, 76, 1),
+        ),
       ),
-      body: const Pagination(),
-    );
-  }
-}
-
-class Pagination extends StatefulWidget {
-  const Pagination({super.key});
-
-  @override
-  PaginationState createState() {
-    return PaginationState();
-  }
-}
-
-class PaginationState extends State<Pagination> {
-  @override
-  Widget build(BuildContext context) {
-    final PageController controller = PageController();
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: PageView(
-            controller: controller,
-            children: const <Widget>[
-              EmotionRecorder(),
-              DietRecorder(),
-              WorkoutRecorder()
-            ],
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index){
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        indicatorColor: Colors.amber,
+        selectedIndex: _currentIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            icon: Icon(Icons.emoji_emotions),
+            label: 'Emotion',
+            selectedIcon: Icon(Icons.emoji_emotions),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                controller.previousPage(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.arrow_forward_ios),
-              onPressed: () {
-                controller.nextPage(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                );
-              },
-            ),
-          ],
-        ),
-      ],
+          NavigationDestination(
+            icon: Icon(Icons.restaurant),
+            label: 'Diet',
+            selectedIcon: Icon(Icons.restaurant),
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.fitness_center),
+            label: 'Workout',
+            selectedIcon: Icon(Icons.fitness_center),
+          ),
+        ],
+      ),
+        body: <Widget>[
+        const EmotionRecorderPage(),
+        const DietRecorderPage(),
+        const WorkoutRecorderPage()
+      ].elementAt(_currentIndex),
     );
   }
 }

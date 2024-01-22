@@ -3,6 +3,5 @@ class EmotionRecorderEvent {
   String emotionName;
   DateTime dateTime;
 
-
   EmotionRecorderEvent(this.emoji, this.emotionName, this.dateTime);
 }

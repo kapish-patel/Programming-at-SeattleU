@@ -133,7 +133,6 @@ class EmotionListSectionState extends State<EmotionListSection> {
     "😡": ["Angry","1-1-1, 12:00:PM"],
     "😴": ["Sleepy","1-1-1, 12:00:PM"],
     "😈": ["Devilish","1-1-1, 12:00:PM"],
-    
   } ;
 
   void addnewEmotion(String emoji, String emotion, String date) {

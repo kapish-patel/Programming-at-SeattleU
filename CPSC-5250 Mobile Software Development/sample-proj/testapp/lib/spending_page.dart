@@ -18,16 +18,28 @@ class _SpendingPageState extends State<SpendingPage> {
   _addSpendingEvent(SpendingEvent spendingEvent) {
     setState(() {
       _spendingEvents.add(spendingEvent);
+      print(spendingEvent.merchant);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 64, 7, 7),
+        title: const Text('Budgetify', style: TextStyle(color: Color.fromARGB(255, 207, 204, 204), fontSize: 24)),
+        centerTitle: true,
+      ),
+      body:ListView(
       children: [
-        SpendingEventForm(addSpendingEvent: _addSpendingEvent),
-        SpendingHistory(_spendingEvents),
+        SizedBox(
+          height: 600, child: SpendingEventForm(_addSpendingEvent),
+        ),
+        SizedBox(
+          height: 600, child: SpendingHistory(_spendingEvents)
+        ),
       ],
+    )
     );
   }
 }

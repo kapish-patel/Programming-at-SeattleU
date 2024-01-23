@@ -2,29 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:testapp/spending_event.dart';
 
 // start working here bcz I have to make the stateful widget 
-class SpendingEventForm extends StatelessWidget {
-  SpendingEventForm({Key? key, required this.addSpendingEvent}) : super(key: key);
+
+class SpendingEventForm extends StatefulWidget {
+  const SpendingEventForm(this.addSpendingEvent, {super.key});
 
   final void Function(SpendingEvent event) addSpendingEvent;
 
-  final TextEditingController merchanttextcontroller = TextEditingController();
-  final TextEditingController categorytextcontroller = TextEditingController();
-  final TextEditingController amounttextcontroller = TextEditingController();
-  final TextEditingController datetextcontroller = TextEditingController();
-  
+  @override
+  createState() => _SpendingEventFormState();
+}
+class _SpendingEventFormState extends State<SpendingEventForm> {
 
   void _onclick() {
-    addSpendingEvent(SpendingEvent(merchant: "test", amount: 1.0, date: DateTime.now(), category: "test"));
+    SpendingEvent event = SpendingEvent(
+      merchant: _merchantController.text,
+      category: _categoryController.text,
+      amount: double.parse(_amountController.text),
+      date: DateTime.parse(_dateController.text));
+    widget.addSpendingEvent(event);
   }
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _merchantController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Budgetify', style: TextStyle(color: Colors.grey, fontSize: 24)),
-        centerTitle: true,
-      ),
-      body:SafeArea(
+    return Form(
+      key: _formKey,
+      child:SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -35,27 +44,35 @@ class SpendingEventForm extends StatelessWidget {
                 )
               ),            
               const Text("Merchant"),
-              const TextField(
-                controller: merchanttextcontroller,
-                decoration: InputDecoration(
+              TextField(
+                controller: _merchantController,
+                decoration: const InputDecoration(
                   labelText: 'Enter Merchant',
                 ),
               ),
               const Text("Category"),
-              const DropdownMenu(dropdownMenuEntries: []),
-              const SizedBox(
+              DropdownMenu(
+                dropdownMenuEntries: const [
+                  DropdownMenuEntry(value: "Education", label: "Education"),
+                  DropdownMenuEntry(value: "Food", label: "Food"),
+                  DropdownMenuEntry(value: "Entertainment", label: "Entertainment"),
+                  DropdownMenuEntry(value: "Transportation", label: "Transportation"),
+                  DropdownMenuEntry(value: "Other", label: "Other"),
+                ],
+                controller: _categoryController, ),
+              SizedBox(
                 height: 200,
                 width: 300,
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text("Amount: "),
+                    const Text("Amount: "),
                     SizedBox(
                       width: 200,
                       height: 100,
                       child: TextField(
-                        controller: amounttextcontroller,
-                        decoration: InputDecoration(
+                        controller: _amountController,
+                        decoration: const InputDecoration(
                           labelText: 'Enter Amount',
                         ),
                         keyboardType: TextInputType.number,
@@ -65,18 +82,18 @@ class SpendingEventForm extends StatelessWidget {
                 ),
               ),
               const Text("Date"),
-              const TextField(
+              TextField(
+                controller: _dateController,
                 keyboardType: TextInputType.datetime,
-                controller: datetextcontroller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Enter Date',
                 ),
               ),
               ElevatedButton(onPressed: _onclick, child: const Text("Submit"))
-            ],
-          )
-        ),
+          ],
+        )
       ),
+    ),
     );
   }
 }

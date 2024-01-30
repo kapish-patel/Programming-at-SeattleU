@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/diet_recorder_page.dart';
 import 'package:healthapp/workout_recorder_page.dart';
 import 'package:healthapp/emotion_recorder_page.dart';
+import 'package:healthapp/providers/diet_provider.dart';
+import 'package:healthapp/providers/emotion_provider.dart';
+import 'package:healthapp/providers/workout_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:healthapp/providers/dedication_provider.dart';
+import 'package:healthapp/overlay_display.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -12,12 +19,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Healthfy',
-      theme: ThemeData(
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => DedicationProvider()),
+        ChangeNotifierProvider(create: (context) => DietProvider()),
+        ChangeNotifierProvider(create: (context) => EmotionProvider()),
+        ChangeNotifierProvider(create: (context) => WorkoutProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Healthfy',
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(),
     );
   }
 }
@@ -36,10 +51,24 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(25),
+        preferredSize: const Size.fromHeight(40),
         child: AppBar(
           title: const Text("Healthfy", style: TextStyle(color: Colors.white,)),
           centerTitle: true, 
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.more, color: Colors.white, size: 30,),
+              onPressed: () {
+                //call the modal bottom sheet
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return const OverlayDisplay();
+                  },
+                );
+              },
+            )
+          ],
           backgroundColor: const Color.fromRGBO(7, 59, 76, 1),
         ),
       ),
@@ -69,10 +98,10 @@ class MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-        body: <Widget>[
-        const EmotionRecorderPage(),
-        const DietRecorderPage(),
-        const WorkoutRecorderPage()
+        body: const <Widget>[
+        EmotionRecorderPage(),
+        DietRecorderPage(),
+        WorkoutRecorderPage()
       ].elementAt(_currentIndex),
     );
   }

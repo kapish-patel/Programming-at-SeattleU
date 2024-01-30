@@ -1,4 +1,4 @@
-class EmotionRecorderEvent {
+class EmotionRecorderEvent{
   String emoji;
   String emotionName;
   DateTime dateTime;

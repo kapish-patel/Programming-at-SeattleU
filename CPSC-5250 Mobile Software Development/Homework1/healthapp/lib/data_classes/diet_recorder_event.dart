@@ -1,8 +1,8 @@
 class DietRecorderEvent {
-  String meelname;
+  String mealname;
   int quantity;
   int calories;
   DateTime dateTime;
 
-  DietRecorderEvent(this.meelname, this.quantity, this.calories, this.dateTime);
+  DietRecorderEvent(this.mealname, this.quantity, this.calories, this.dateTime);
 }

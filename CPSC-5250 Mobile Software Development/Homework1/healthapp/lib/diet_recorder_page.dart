@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:healthapp/data_classes/diet_recorder_event.dart';
+import 'package:healthapp/diet_recorder_form.dart';
+import 'package:healthapp/diet_history.dart';
 
 class DietRecorderPage extends StatefulWidget {
   const DietRecorderPage({Key? key}) : super(key: key);
@@ -9,19 +10,17 @@ class DietRecorderPage extends StatefulWidget {
 }
 
 class _DietRecorderPageState extends State<DietRecorderPage> {
-  
-  final List<DietRecorderEvent> _dietRecorderEvents = <DietRecorderEvent>[];
-
-  _addDietRecorderEvent(DietRecorderEvent dietRecorderEvent) {
-    setState(() {
-      _dietRecorderEvents.add(dietRecorderEvent);
-    });
-  }
-
   @override
   Widget build(BuildContext context){
     return Container(
-      child: Text('Diet Recorder Page'),
+      child: const Column(
+        children: <Widget>[
+          DietRecorderForm(),
+          Expanded(
+            child: DietHistory(),
+          ),
+        ],
+      ),
     );
   }
 }

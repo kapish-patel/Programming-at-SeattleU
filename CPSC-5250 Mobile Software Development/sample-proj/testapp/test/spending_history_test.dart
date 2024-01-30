@@ -28,7 +28,7 @@ void main() {
 
     await widgetTester.pumpWidget(MaterialApp(home: Material( child: SpendingHistory(events))));
     
-    expect(find.text("Walmart"), findsOneWidget);
+    expect(find.text("It"), findsOneWidget);
     expect(find.text("Target"), findsOneWidget);
     expect(find.text("Costco"), findsOneWidget);
   });

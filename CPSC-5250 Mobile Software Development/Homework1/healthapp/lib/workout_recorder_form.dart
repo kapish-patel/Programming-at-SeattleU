@@ -12,6 +12,7 @@ class WorkoutRecorderForm extends StatefulWidget {
 }
 
 class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController workoutDurationHours = TextEditingController();
   final TextEditingController workoutDurationMinutes = TextEditingController();
@@ -46,7 +47,7 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
     return Consumer2(builder: (context, WorkoutProvider workoutProvider, DedicationProvider dedicationProvider, child) {
       return  Container(
         child: Form(
-          key: _formKey,
+          key: const Key("workoutFormKey"),
           child: Column(
             children: <Widget>[
               Row(
@@ -58,6 +59,7 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
                     )
                   ),
                   DropdownButton(
+                    key: const Key("workoutDropdown"),
                     value: dropdownValue,
                     items: exerciseList.entries.map((e) {
                       return DropdownMenuItem(
@@ -85,6 +87,7 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      key: const Key("hoursTextField"),
                       controller: workoutDurationHours,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
@@ -101,6 +104,7 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextFormField(
+                      key: const Key("minutesTextField"),
                       controller: workoutDurationMinutes,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(

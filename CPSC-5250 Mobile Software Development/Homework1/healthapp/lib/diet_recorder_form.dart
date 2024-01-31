@@ -30,6 +30,7 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
                   children: <Widget>[
                     const Text("Select Food Item: ", style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
                     DropdownButton(
+                      key: const Key("foodItemDropdown"),
                       items: dietProvider.getUniqueFoodNames.map((String foodName) {
                         return DropdownMenuItem(
                           value: foodName,
@@ -43,6 +44,7 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
                   ]
                 ),
                 TextFormField(
+                  key: const Key("mealNameTextField"),
                   controller: _mealNameController,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
@@ -59,6 +61,7 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
                   children: <Widget>[
                     Expanded(
                       child:TextFormField(
+                        key: const Key("caloriesTextField"),
                         controller: _caloriesController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
@@ -75,6 +78,7 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
                     const SizedBox(width: 8),
                     Expanded(
                       child:TextFormField(
+                        key: const Key("quantityTextField"),
                         controller: _quantityController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(

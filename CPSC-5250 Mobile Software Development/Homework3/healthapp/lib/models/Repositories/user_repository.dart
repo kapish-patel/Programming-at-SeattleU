@@ -20,8 +20,12 @@ class UserRepository{
 
   // delete and add user
   Future<void> adduser(UserModel userModel) async {
-    _user.where().filter().uuidEqualTo(userModel.uuid).deleteAll();
-    await _user.put(UserIsar(userModel.decidationLevel, userModel.recordingPoints, userModel.lastRecorded, userModel.lastRecordedString, userModel.uuid));
+    await _user.isar.writeTxn(() async {
+      _user.where().filter().uuidEqualTo(userModel.uuid).deleteAll();
+    });
+    await _user.isar.writeTxn(() async {
+      await _user.put(UserIsar(userModel.decidationLevel, userModel.recordingPoints, userModel.lastRecorded, userModel.lastRecordedString, userModel.uuid));
+    });
   }
   
 }

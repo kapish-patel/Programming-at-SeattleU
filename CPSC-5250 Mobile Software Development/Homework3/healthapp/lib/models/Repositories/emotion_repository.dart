@@ -22,8 +22,11 @@ class EmotionRepository {
     });
   }
 
-  void deleteEmotion(String uuid) {
-    _emotionRecorderEvent.filter().uuidEqualTo(uuid).deleteAll();
-  }
+  void deleteEmotion(String uuid) async {
+    await _emotionRecorderEvent.isar.writeTxn(() async {
+      await _emotionRecorderEvent.filter().uuidEqualTo(uuid).deleteAll();
+  });
+}
+
 
 }

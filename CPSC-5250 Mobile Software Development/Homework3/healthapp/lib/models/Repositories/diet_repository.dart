@@ -20,7 +20,11 @@ class DietRepository {
     });
   }
 
-  void deleteDiet(String uuid) {
-    _dietRecorderEvents.where().filter().uuidEqualTo(uuid).deleteAll();
+  void deleteDiet(String uuid) async {
+    await _dietRecorderEvents.isar.writeTxn(() async {
+      await _dietRecorderEvents.where().filter().uuidEqualTo(uuid).deleteAll();
+    });
   }
+
+
 }

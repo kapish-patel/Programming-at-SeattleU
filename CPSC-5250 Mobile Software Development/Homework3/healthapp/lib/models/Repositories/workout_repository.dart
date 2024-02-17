@@ -21,7 +21,9 @@ class WorkoutRepository {
     });
   }
 
-  void deleteWorkout(uuid) {
-    _workoutRecorderEvents.where().filter().uuidEqualTo(uuid).deleteAll();
+  void deleteWorkout(uuid) async{
+    await _workoutRecorderEvents.isar.writeTxn(() async {
+      await _workoutRecorderEvents.where().filter().uuidEqualTo(uuid).deleteAll();
+    });
   }
 }

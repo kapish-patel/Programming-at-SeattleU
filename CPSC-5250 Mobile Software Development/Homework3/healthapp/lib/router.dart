@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:healthapp/views/diet_recorder/diet_edit_page.dart';
 import 'package:healthapp/views/screens.dart';
 import 'package:healthapp/views/emotion_recorder/emotion_recorder_page.dart';
 import 'package:healthapp/views/diet_recorder/diet_recorder_page.dart';
@@ -38,7 +39,17 @@ final goRouter = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: DietRecorderPage(),
               ),
-              //routes: [],
+              routes: [
+                GoRoute(
+                  path: 'edit/:uuid',
+                  pageBuilder: (context, state) {
+                    final String uuid = state.pathParameters['uuid'].toString();
+                    return NoTransitionPage(
+                      child: EditDietPage(uuid: uuid),
+                    );
+                  } 
+                ),
+              ],
             ),
           ],
         ),

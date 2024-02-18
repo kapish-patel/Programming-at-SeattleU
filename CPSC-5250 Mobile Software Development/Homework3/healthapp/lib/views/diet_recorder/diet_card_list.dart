@@ -6,6 +6,7 @@ class DietCardList extends StatelessWidget {
   final String quantity;
   final String dateTime;
   final Function ontapDelete;
+  final Function ontapEdit;
 
   const DietCardList({
     Key? key,
@@ -14,6 +15,7 @@ class DietCardList extends StatelessWidget {
     required this.quantity,
     required this.dateTime,
     required this.ontapDelete,
+    required this.ontapEdit,
   }) : super(key: key);
 
   @override
@@ -39,11 +41,22 @@ class DietCardList extends StatelessWidget {
             ),
           ],
         ),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () {
-            ontapDelete();
-          },
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: () {
+                ontapEdit();
+              },
+              icon: const Icon(Icons.edit),
+            ),
+            IconButton(
+              onPressed: () {
+                ontapDelete();
+              },
+              icon: const Icon(Icons.delete),
+            ),
+          ],
         ),
       ),
     );

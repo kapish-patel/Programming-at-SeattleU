@@ -43,4 +43,16 @@ class DietProvider extends ChangeNotifier {
     _dietRepository.deleteDiet(uuid);
     notifyListeners();
   }
+
+  // get diet by uuid
+  Future<DietRecorderModel> getDietByUuid(String uuid) async {
+    return await _dietRepository.getDietByUuid(uuid);
+  }
+
+  void updateDiet(DietRecorderModel diet) {
+    _dietRepository.updateDiet(diet);
+    _diets.removeWhere((element) => element.uuid == diet.uuid);
+    _diets.add(diet);
+    notifyListeners();
+  }
 }

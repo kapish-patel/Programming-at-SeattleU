@@ -26,5 +26,25 @@ class DietRepository {
     });
   }
 
+  // get diet by uuid
+  Future<DietRecorderModel> getDietByUuid(String uuid) async {
+    var diet = await _dietRecorderEvents.where().filter().uuidEqualTo(uuid).findFirst();
+    return DietRecorderModel(diet!.mealname, diet.quantity, diet.calories, diet.dateTime, diet.uuid);
+  }
 
+  void updateDiet(DietRecorderModel diet) async {
+    await _dietRecorderEvents.isar.writeTxn(() async {
+
+      // get the diet from the database and delete it
+      await _dietRecorderEvents.where().filter().uuidEqualTo(diet.uuid).deleteAll();
+
+      // create new diet with the updated values
+      var updatedDiet = DietRecorderEventIsar(diet.mealname, diet.quantity, diet.calories, diet.dateTime, diet.uuid);
+
+      // update the diet
+      await _dietRecorderEvents.put(updatedDiet);
+      // delete the old diet
+      // await _dietRecorderEvents.where().filter().uuidEqualTo(dietEvent!.uuid).deleteAll();
+    });
+  }
 }

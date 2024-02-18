@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthapp/router.dart';
 import 'package:healthapp/view-models/diet_provider.dart';
 import 'package:healthapp/views/diet_recorder/diet_card_list.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,12 @@ class DietHistory extends StatelessWidget {
           dateTime: dietProvider.diets[index].dateTime.toString(),
           ontapDelete: () {
             dietProvider.deleteDiet(dietProvider.diets[index].uuid);
-          }
+          },
+          ontapEdit: (){
+            String uuid = dietProvider.diets[index].uuid.toString();
+            goRouter.go('/diet/edit/$uuid', 
+            );
+          },
         );
       },
     );

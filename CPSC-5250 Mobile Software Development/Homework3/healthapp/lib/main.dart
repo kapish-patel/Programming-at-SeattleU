@@ -7,9 +7,11 @@ import 'package:healthapp/models/Repositories/diet_repository.dart';
 import 'package:healthapp/models/Repositories/emotion_repository.dart';
 import 'package:healthapp/models/Repositories/user_repository.dart';
 import 'package:healthapp/models/Repositories/workout_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:healthapp/models/db_connection.dart';
 import 'package:healthapp/view-models/diet_provider.dart';
 import 'package:healthapp/view-models/emotion_provider.dart';
+import 'package:healthapp/view-models/switcher_provider.dart';
 import 'package:healthapp/view-models/user_provider.dart';
 import 'package:healthapp/view-models/workout_provider.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +29,7 @@ void main() async{
         ChangeNotifierProvider(create:(context) => EmotionProvider(EmotionRepository(isar.emotionRecorderEventIsars))),
         ChangeNotifierProvider(create:(context) => WorkoutProvider(WorkoutRepository(isar.workoutRecorderEventIsars))),
         ChangeNotifierProvider(create:(context) => UserProvider(UserRepository(isar.userIsars))),
+        ChangeNotifierProvider(create: (context) => SwitcherProvider()),
       ],
       child: MyApp(isar: isar),
     )
@@ -40,7 +43,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: goRouter,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      routerConfig: goRouter, 
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.amber),
     );

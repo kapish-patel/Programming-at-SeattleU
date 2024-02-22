@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/models/Data_Model/diet_model.dart';
 import 'package:healthapp/view-models/diet_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:healthapp/view-models/switcher_provider.dart';
 import 'package:healthapp/view-models/user_provider.dart';
+import 'package:healthapp/views/diet_recorder/diet_recorder_form_ios.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -23,14 +26,17 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
   Widget build(BuildContext context){
     final dietProvider = context.watch<DietProvider>();
     final userProvider = context.watch<UserProvider>();
-    return Container(
+    final isSwitched = context.watch<SwitcherProvider>().isSwitched;
+    return isSwitched ? DietRecorderFormIos() :
+    Container(
       child: Form(
         key: _formKey,
           child: Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  const Text("Select Food Item: ", style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
+                  Text(" ${AppLocalizations.of(context)!.selectFoodName}: ", style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
+
                   DropdownButton(
                     key: const Key("foodItemDropdown"),
                     items: dietProvider.unique.map((String foodName) {
@@ -49,12 +55,12 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
                 key: const Key("mealNameTextField"),
                 controller: _mealNameController,
                 keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  labelText: 'Food Item Name',
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.foodItemName,
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter Food Item Name';
+                    return '${AppLocalizations.of(context)!.pleaseEnter} ${AppLocalizations.of(context)!.foodItemName}'; // to be localized
                   }
                   return null;
                 },
@@ -66,12 +72,12 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
                       key: const Key("caloriesTextField"),
                       controller: _caloriesController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Calories',
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.calories,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter Calories';
+                          return '${AppLocalizations.of(context)!.pleaseEnter} ${AppLocalizations.of(context)!.calories}';// to be localized
                         }
                         return null;
                       },
@@ -83,12 +89,12 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
                       key: const Key("quantityTextField"),
                       controller: _quantityController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Quantity',
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.quantity,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter Quantity';
+                          return '${AppLocalizations.of(context)!.pleaseEnter} ${AppLocalizations.of(context)!.quantity}';// to be localized
                         }
                         return null;
                       },
@@ -105,7 +111,7 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
 
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Successfully Submitted')),
+                      SnackBar(content: Text(AppLocalizations.of(context)!.successfullySubmitted)),// to be localized
                     );
 
                     FocusScope.of(context).unfocus();
@@ -129,8 +135,8 @@ class _DietRecorderFormState extends State<DietRecorderForm> {
                     _quantityController.clear();
                   }
                 },
-                child: const Text('Submit',
-                  style: TextStyle(
+                child: Text(AppLocalizations.of(context)!.submit,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                   ),

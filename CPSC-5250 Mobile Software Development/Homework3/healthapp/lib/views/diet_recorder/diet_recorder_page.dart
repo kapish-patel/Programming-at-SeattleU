@@ -1,8 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/view-models/diet_provider.dart';
+import 'package:healthapp/view-models/switcher_provider.dart';
 import 'package:healthapp/views/custom_bottom_sheet.dart';
+import 'package:healthapp/views/custom_bottom_sheet_ios.dart';
 import 'package:healthapp/views/diet_recorder/diet_history.dart';
 import 'package:healthapp/views/diet_recorder/diet_recorder_form.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:healthapp/views/switcher.dart';
 import 'package:provider/provider.dart';
 
 class DietRecorderPage extends StatelessWidget {
@@ -10,12 +15,22 @@ class DietRecorderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isSwitched = context.watch<SwitcherProvider>().isSwitched;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Diet Recorder'),
+        title: Text('${AppLocalizations.of(context)!.diet} ${AppLocalizations.of(context)!.recorder}'),
         actions: [
+          const Switcher(),
           IconButton(
             onPressed: () {
+              isSwitched ?
+              showCupertinoModalPopup(
+                context: context, 
+                builder: (context) {
+                  return const CustomBottomSheetIos();
+                }
+              )
+              :
               showModalBottomSheet(
                 context: context, 
                 builder: (context) => const CustomBottomSheet()

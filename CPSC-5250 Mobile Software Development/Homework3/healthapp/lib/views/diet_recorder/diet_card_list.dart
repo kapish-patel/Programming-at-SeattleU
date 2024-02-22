@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healthapp/view-models/switcher_provider.dart';
+import 'package:provider/provider.dart';
 
 class DietCardList extends StatelessWidget {
   final String foodName;
@@ -20,7 +23,52 @@ class DietCardList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    final isSwitched = context.watch<SwitcherProvider>().isSwitched;
+
+    return isSwitched ?
+    // cupertino widgets
+    Card(
+      elevation: 3,
+      margin: const EdgeInsets.all(8),
+      child: CupertinoListTile(
+        title: Text(
+          foodName,
+          style: const TextStyle(fontSize: 18),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Calories: $calories, Quantity: $quantity',
+              style: const TextStyle(fontSize: 12),
+            ),
+            Text(
+              dateTime,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CupertinoButton(
+              onPressed: () {
+                ontapEdit();
+              },
+              child: const Icon(Icons.edit),
+            ),
+            CupertinoButton(
+              onPressed: () {
+                ontapDelete();
+              },
+              child: const Icon(Icons.delete),
+            ),
+          ],
+        ),
+      ),
+    )
+    :
+    Card(
       elevation: 3,
       margin: const EdgeInsets.all(8),
       child: ListTile(

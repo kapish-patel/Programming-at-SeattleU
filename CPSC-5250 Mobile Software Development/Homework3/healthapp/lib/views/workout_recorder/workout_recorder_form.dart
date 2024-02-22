@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/models/Data_Model/workout_model.dart';
 import 'package:healthapp/view-models/user_provider.dart';
 import 'package:healthapp/view-models/workout_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,44 +22,52 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
   final TextEditingController workoutNameController = TextEditingController();
   final TextEditingController workoutEmojiController = TextEditingController();
 
+  late Map<String, String> exerciseList;
 
-  final Map<String, String> exerciseList = {
-    "🏋️‍♀️": "Workout",
-    "🏃‍♀️": "Running",
-    "🚴‍♀️": "Cycling",
-    "🏊‍♀️": "Swimming",
-    "🧘‍♀️": "Yoga",
-    "🏸": "Badminton",
-    "🏓": "Table Tennis",
-    "🏀": "Basketball",
-    "⚽": "Football",
-    "🏐": "Volleyball",
-    "🏈": "American Football",
-    "🎾": "Lawn Tennis",
-  };
+  bool _isExerciseListInitialized = false;
 
   @override
   void initState() {
     super.initState();
     workoutEmojiController.text = "🏋️‍♀️";
-    workoutNameController.text = exerciseList["🏋️‍♀️"]!;
   }
   String dropdownValue = "🏋️‍♀️";
 
   @override
   Widget build(BuildContext context) {
+
+     if (!_isExerciseListInitialized) {
+      // Initialize exerciseList only once when the widget builds for the first time
+      exerciseList = {
+        "🏋️‍♀️": AppLocalizations.of(context)!.workout,
+        "🏃‍♀️": AppLocalizations.of(context)!.running,
+        "🚴‍♀️": AppLocalizations.of(context)!.cycling,
+        "🏊‍♀️": AppLocalizations.of(context)!.swimming,
+        "🧘‍♀️": AppLocalizations.of(context)!.yoga,
+        "🏸": AppLocalizations.of(context)!.badminton,
+        "🏓": AppLocalizations.of(context)!.tableTennis,
+        "🏀": AppLocalizations.of(context)!.basketball,
+        "⚽": AppLocalizations.of(context)!.football,
+        "🏐": AppLocalizations.of(context)!.volleyball,
+        "🏈": AppLocalizations.of(context)!.americanFootball,
+        "🎾": AppLocalizations.of(context)!.lawnTennis,
+      };
+      _isExerciseListInitialized = true;
+      workoutNameController.text = exerciseList[dropdownValue]!;
+    }
+
     final workoutProvider = context.read<WorkoutProvider>();
     final userProvider = context.read<UserProvider>();
 
-    return  Container(
+    return Container(
       child: Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
-                const Text("Select Workout:    ", 
-                style: TextStyle(
+                Text(" ${AppLocalizations.of(context)!.selectWorkout}:", 
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                   )
@@ -82,8 +91,8 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
                 ),
               ],
             ),
-            const Text("Workout Duration", 
-            style: TextStyle(
+            Text(AppLocalizations.of(context)!.workoutDuration, 
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold
               )
@@ -95,12 +104,12 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
                     key: const Key("hoursTextField"),
                     controller: workoutDurationHours,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Hours",
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.hours,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Please enter workout duration";
+                        return '${AppLocalizations.of(context)!.pleaseEnterWorkoutDuration} ${AppLocalizations.of(context)!.hours}';
                       }
                       return null;
                     },
@@ -112,12 +121,12 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
                     key: const Key("minutesTextField"),
                     controller: workoutDurationMinutes,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Minutes",
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.minutes,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Please enter workout duration";
+                        return '${AppLocalizations.of(context)!.pleaseEnterWorkoutDuration} ${AppLocalizations.of(context)!.minutes}';
                       }
                       return null;
                     },
@@ -132,7 +141,7 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Successfully Submitted")),
+                    SnackBar(content: Text(AppLocalizations.of(context)!.successfullySubmitted))
                   );
                   FocusScope.of(context).unfocus();
                   var date = DateTime.now();
@@ -155,8 +164,8 @@ class _WorkoutRecorderFormState extends State<WorkoutRecorderForm> {
                   workoutDurationMinutes.clear();
                 }
               },
-              child: const Text("Submit", 
-              style: TextStyle(
+              child: Text(AppLocalizations.of(context)!.submit, 
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 16,
                 )

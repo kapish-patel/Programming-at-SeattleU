@@ -1,17 +1,41 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:healthapp/models/Data_Model/user_model.dart';
 import 'package:healthapp/models/Repositories/user_repository.dart';
 
 class UserProvider extends ChangeNotifier {
   final UserRepository _userRepository;
-  late Future<UserModel> _user;
+  UserModel? _user;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  late FirebaseAuth _auth;
+  late StreamSubscription<User?> _authStateChangesSubscription;
+  late StreamController<UserModel?> _userStreamController;
 
-  UserProvider(this._userRepository) {
+
+  UserProvider(this._userRepository, FirebaseAuth auth) {
     _getUser();
+    _auth = auth;
+    _userStreamController = StreamController<UserModel?>();
+    _authStateChangesSubscription = _auth.authStateChanges().listen((User? user) async {
+      if (user != null) {
+        // if user is signed is then get user from firebase
+        _user = _userRepository.getUserFromFirebase(user) as UserModel?;
+      } else {
+        // else get user from local db
+        _user = await _userRepository.getUser();
+      }
+      _userStreamController.add(_user);
+    });
   }
 
   // Get user
-  Future<UserModel> get user => _user;
+  UserModel? get user => _user;
+
+  // Get user stream
+  Stream<UserModel?> get userStream => _userStreamController.stream;
 
   // Add or update user
   Future<void> addUser(UserModel user) async {
@@ -21,17 +45,17 @@ class UserProvider extends ChangeNotifier {
 
   // Get user
   Future<void> _getUser() async {
-    _user = _userRepository.getUser();
+    _user = await _userRepository.getUser();
     notifyListeners();
   }
 
   // Calculate points
   Future<void> calculatePoints(DateTime newTime, String newLastRecordedString) async {
     final userModel = await user;
-    int recordingPoints = userModel.recordingPoints;
+    int recordingPoints = userModel!.recordingPoints;
     DateTime lastRecorded = userModel.lastRecorded;
     String lastRecordedString = userModel.lastRecordedString;
-    int level = userModel.decidationLevel;
+    int level = userModel.level;
 
     // Calculate the points
     int difference = newTime.difference(lastRecorded).inMinutes;
@@ -43,7 +67,7 @@ class UserProvider extends ChangeNotifier {
 
     // Calculate the level
     if (userModel.recordingPoints >= 100) {
-      userModel.decidationLevel = level + 1;
+      userModel.level = level + 1;
       userModel.recordingPoints = 0;
     }
 
@@ -59,4 +83,47 @@ class UserProvider extends ChangeNotifier {
     // Notify listeners
     notifyListeners();
   }
+
+
+  // Sign in with google 
+  Future<void> signinWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+        final AuthCredential authCredential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+        final UserCredential userCredential = await _auth.signInWithCredential(authCredential);
+        final User? user = userCredential.user;
+        
+        if (user != null) {
+          // perform merge of local and firebase user data
+          UserModel newUserDetails = UserModel(
+            _user!.level,
+            _user!.recordingPoints,
+            _user!.lastRecorded,
+            _user!.lastRecordedString,
+            _user!.uuid,
+            true,
+            user.displayName!,
+            user.email!,
+            user.photoURL!);
+          // add user in isar db
+          addUser(newUserDetails);
+          // add user in firebase db
+          _userRepository.addUserToFirebase(newUserDetails);
+        }
+        else {
+          print("Google Sign In Failed");
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  
 }

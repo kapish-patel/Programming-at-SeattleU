@@ -13,7 +13,7 @@ class CustomBottomSheetIos extends StatelessWidget {
       actions: <Widget>[
         CupertinoActionSheetAction(
           child: FutureBuilder<UserModel>(
-            future: Provider.of<UserProvider>(context).user,
+            future: Future.value(Provider.of<UserProvider>(context).user),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Text("Loading..."); // Placeholder while waiting for data
@@ -32,7 +32,7 @@ class CustomBottomSheetIos extends StatelessWidget {
         ),
         CupertinoActionSheetAction(
           child: FutureBuilder<UserModel>(
-            future: Provider.of<UserProvider>(context).user,
+            future: Future.value(Provider.of<UserProvider>(context).user),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Text("Loading..."); // Placeholder while waiting for data
@@ -41,7 +41,7 @@ class CustomBottomSheetIos extends StatelessWidget {
               } else {
                 final userModel = snapshot.data!;
                 return Text(
-                  "Level: ${userModel.decidationLevel}",
+                  "Level: ${userModel.level}",
                   style: const TextStyle(fontSize: 16.0),
                 );
               }
@@ -51,7 +51,7 @@ class CustomBottomSheetIos extends StatelessWidget {
         ),
         CupertinoActionSheetAction(
           child: FutureBuilder<UserModel>(
-            future: Provider.of<UserProvider>(context).user,
+            future: Future.value(Provider.of<UserProvider>(context).user),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Text("Loading..."); // Placeholder while waiting for data
@@ -70,7 +70,7 @@ class CustomBottomSheetIos extends StatelessWidget {
         ),
         CupertinoActionSheetAction(
           child: FutureBuilder<UserModel>(
-            future: Provider.of<UserProvider>(context).user,
+            future: Future.value(Provider.of<UserProvider>(context).user),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Text("Loading..."); // Placeholder while waiting for data

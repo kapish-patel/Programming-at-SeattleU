@@ -7,10 +7,14 @@ class UserIsar{
   Id? id;
 
   String uuid;
-  int decidationLevel;
+  int level;
   int recordingPoints; 
   DateTime lastRecorded;
   String lastRecordedString;
+  bool isregistered;
+  String displayName;
+  String email;
+  String photoURL;
 
-  UserIsar(this.decidationLevel, this.recordingPoints, this.lastRecorded, this.lastRecordedString, this.uuid);
+  UserIsar(this.level, this.recordingPoints, this.lastRecorded, this.lastRecordedString, this.uuid, this.isregistered, this.displayName, this.email, this.photoURL);
 }

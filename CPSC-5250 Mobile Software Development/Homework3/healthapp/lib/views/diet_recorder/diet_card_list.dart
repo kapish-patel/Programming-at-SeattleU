@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/view-models/switcher_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class DietCardList extends StatelessWidget {
@@ -39,7 +40,7 @@ class DietCardList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Calories: $calories, Quantity: $quantity',
+              '${AppLocalizations.of(context)!.calories}: $calories, ${AppLocalizations.of(context)!.quantity}: $quantity',
               style: const TextStyle(fontSize: 12),
             ),
             Text(
@@ -80,7 +81,7 @@ class DietCardList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Calories: $calories, Quantity: $quantity',
+              '${AppLocalizations.of(context)!.calories}: $calories, ${AppLocalizations.of(context)!.quantity}: $quantity',
               style: const TextStyle(fontSize: 12),
             ),
             Text(

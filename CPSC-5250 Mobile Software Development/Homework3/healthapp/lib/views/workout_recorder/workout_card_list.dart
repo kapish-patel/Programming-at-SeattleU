@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/view-models/switcher_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WorkoutCardList extends StatelessWidget {
   final String emoji;
@@ -45,7 +46,7 @@ class WorkoutCardList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Duration: ${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}',
+                '${AppLocalizations.of(context)!.duration}: ${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}',
                 style: const TextStyle(fontSize: 12),
               ),
               Text(
@@ -86,7 +87,7 @@ class WorkoutCardList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Duration: ${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}',
+              '${AppLocalizations.of(context)!.duration}: ${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}',
               style: const TextStyle(fontSize: 12),
             ),
             Text(

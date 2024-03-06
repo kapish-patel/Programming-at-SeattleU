@@ -50,6 +50,7 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
           NavigationDestination(label: 'Emotion', icon: Icon(Icons.emoji_emotions,)),
           NavigationDestination(label: 'Diet', icon: Icon(Icons.fastfood)),
           NavigationDestination(label: 'Workout', icon: Icon(Icons.fitness_center)),
+          NavigationDestination(label: 'leaderboard', icon: Icon(Icons.leaderboard)),
         ],
         onDestinationSelected: onDestinationSelected,
       ),

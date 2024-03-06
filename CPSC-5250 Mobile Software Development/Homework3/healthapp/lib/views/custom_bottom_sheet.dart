@@ -13,7 +13,7 @@ class CustomBottomSheet extends StatelessWidget {
       height: 400,
       child: Center(
         child: FutureBuilder<UserModel>(
-          future: Provider.of<UserProvider>(context).user,
+            future: Future.value(Provider.of<UserProvider>(context).user),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
@@ -25,7 +25,7 @@ class CustomBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("User Points and Level", style: TextStyle(fontSize: 20.0)),
-                  Text(" ${AppLocalizations.of(context)!.dedicationLevel}: ${userModel.decidationLevel}", style: const TextStyle(fontSize: 20.0)),
+                  Text(" ${AppLocalizations.of(context)!.dedicationLevel}: ${userModel.level}", style: const TextStyle(fontSize: 20.0)),
                   Text(" ${AppLocalizations.of(context)!.recordingPoints}: ${userModel.recordingPoints}", style: const TextStyle(fontSize: 20.0)),
                   Text(" ${AppLocalizations.of(context)!.lastRecorded}: ${userModel.lastRecorded}",style: const TextStyle(fontSize: 20.0)),
                   Text(" ${AppLocalizations.of(context)!.recordingPoints}: ${100 - userModel.recordingPoints}", style: const TextStyle(fontSize: 20.0)),

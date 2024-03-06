@@ -17,28 +17,48 @@ const UserIsarSchema = CollectionSchema(
   name: r'UserIsar',
   id: 1907786346797868586,
   properties: {
-    r'decidationLevel': PropertySchema(
+    r'displayName': PropertySchema(
       id: 0,
-      name: r'decidationLevel',
-      type: IsarType.long,
+      name: r'displayName',
+      type: IsarType.string,
+    ),
+    r'email': PropertySchema(
+      id: 1,
+      name: r'email',
+      type: IsarType.string,
+    ),
+    r'isregistered': PropertySchema(
+      id: 2,
+      name: r'isregistered',
+      type: IsarType.bool,
     ),
     r'lastRecorded': PropertySchema(
-      id: 1,
+      id: 3,
       name: r'lastRecorded',
       type: IsarType.dateTime,
     ),
     r'lastRecordedString': PropertySchema(
-      id: 2,
+      id: 4,
       name: r'lastRecordedString',
       type: IsarType.string,
     ),
+    r'level': PropertySchema(
+      id: 5,
+      name: r'level',
+      type: IsarType.long,
+    ),
+    r'photoURL': PropertySchema(
+      id: 6,
+      name: r'photoURL',
+      type: IsarType.string,
+    ),
     r'recordingPoints': PropertySchema(
-      id: 3,
+      id: 7,
       name: r'recordingPoints',
       type: IsarType.long,
     ),
     r'uuid': PropertySchema(
-      id: 4,
+      id: 8,
       name: r'uuid',
       type: IsarType.string,
     )
@@ -63,7 +83,10 @@ int _userIsarEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.displayName.length * 3;
+  bytesCount += 3 + object.email.length * 3;
   bytesCount += 3 + object.lastRecordedString.length * 3;
+  bytesCount += 3 + object.photoURL.length * 3;
   bytesCount += 3 + object.uuid.length * 3;
   return bytesCount;
 }
@@ -74,11 +97,15 @@ void _userIsarSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.decidationLevel);
-  writer.writeDateTime(offsets[1], object.lastRecorded);
-  writer.writeString(offsets[2], object.lastRecordedString);
-  writer.writeLong(offsets[3], object.recordingPoints);
-  writer.writeString(offsets[4], object.uuid);
+  writer.writeString(offsets[0], object.displayName);
+  writer.writeString(offsets[1], object.email);
+  writer.writeBool(offsets[2], object.isregistered);
+  writer.writeDateTime(offsets[3], object.lastRecorded);
+  writer.writeString(offsets[4], object.lastRecordedString);
+  writer.writeLong(offsets[5], object.level);
+  writer.writeString(offsets[6], object.photoURL);
+  writer.writeLong(offsets[7], object.recordingPoints);
+  writer.writeString(offsets[8], object.uuid);
 }
 
 UserIsar _userIsarDeserialize(
@@ -88,11 +115,15 @@ UserIsar _userIsarDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = UserIsar(
-    reader.readLong(offsets[0]),
-    reader.readLong(offsets[3]),
-    reader.readDateTime(offsets[1]),
-    reader.readString(offsets[2]),
+    reader.readLong(offsets[5]),
+    reader.readLong(offsets[7]),
+    reader.readDateTime(offsets[3]),
     reader.readString(offsets[4]),
+    reader.readString(offsets[8]),
+    reader.readBool(offsets[2]),
+    reader.readString(offsets[0]),
+    reader.readString(offsets[1]),
+    reader.readString(offsets[6]),
   );
   object.id = id;
   return object;
@@ -106,14 +137,22 @@ P _userIsarDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
-    case 1:
-      return (reader.readDateTime(offset)) as P;
-    case 2:
       return (reader.readString(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readBool(offset)) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
+      return (reader.readLong(offset)) as P;
+    case 6:
+      return (reader.readString(offset)) as P;
+    case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -209,58 +248,264 @@ extension UserIsarQueryWhere on QueryBuilder<UserIsar, UserIsar, QWhereClause> {
 
 extension UserIsarQueryFilter
     on QueryBuilder<UserIsar, UserIsar, QFilterCondition> {
-  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition>
-      decidationLevelEqualTo(int value) {
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> displayNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'decidationLevel',
+        property: r'displayName',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition>
-      decidationLevelGreaterThan(
-    int value, {
+      displayNameGreaterThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'decidationLevel',
+        property: r'displayName',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition>
-      decidationLevelLessThan(
-    int value, {
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> displayNameLessThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'decidationLevel',
+        property: r'displayName',
         value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> displayNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'displayName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> displayNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'displayName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> displayNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'displayName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> displayNameContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'displayName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> displayNameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'displayName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> displayNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'displayName',
+        value: '',
       ));
     });
   }
 
   QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition>
-      decidationLevelBetween(
-    int lower,
-    int upper, {
+      displayNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'displayName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'decidationLevel',
+        property: r'email',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'email',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'email',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'email',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> emailIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'email',
+        value: '',
       ));
     });
   }
@@ -329,6 +574,16 @@ extension UserIsarQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> isregisteredEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isregistered',
+        value: value,
       ));
     });
   }
@@ -518,6 +773,189 @@ extension UserIsarQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'lastRecordedString',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> levelEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'level',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> levelGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'level',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> levelLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'level',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> levelBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'level',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photoURL',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'photoURL',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'photoURL',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'photoURL',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'photoURL',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'photoURL',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'photoURL',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'photoURL',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'photoURL',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterFilterCondition> photoURLIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'photoURL',
         value: '',
       ));
     });
@@ -717,15 +1155,39 @@ extension UserIsarQueryLinks
     on QueryBuilder<UserIsar, UserIsar, QFilterCondition> {}
 
 extension UserIsarQuerySortBy on QueryBuilder<UserIsar, UserIsar, QSortBy> {
-  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByDecidationLevel() {
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByDisplayName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'decidationLevel', Sort.asc);
+      return query.addSortBy(r'displayName', Sort.asc);
     });
   }
 
-  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByDecidationLevelDesc() {
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByDisplayNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'decidationLevel', Sort.desc);
+      return query.addSortBy(r'displayName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByEmail() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'email', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByEmailDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'email', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByIsregistered() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isregistered', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByIsregisteredDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isregistered', Sort.desc);
     });
   }
 
@@ -751,6 +1213,30 @@ extension UserIsarQuerySortBy on QueryBuilder<UserIsar, UserIsar, QSortBy> {
       sortByLastRecordedStringDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastRecordedString', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'level', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByLevelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'level', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByPhotoURL() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoURL', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> sortByPhotoURLDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoURL', Sort.desc);
     });
   }
 
@@ -781,15 +1267,27 @@ extension UserIsarQuerySortBy on QueryBuilder<UserIsar, UserIsar, QSortBy> {
 
 extension UserIsarQuerySortThenBy
     on QueryBuilder<UserIsar, UserIsar, QSortThenBy> {
-  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByDecidationLevel() {
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByDisplayName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'decidationLevel', Sort.asc);
+      return query.addSortBy(r'displayName', Sort.asc);
     });
   }
 
-  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByDecidationLevelDesc() {
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByDisplayNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'decidationLevel', Sort.desc);
+      return query.addSortBy(r'displayName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByEmail() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'email', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByEmailDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'email', Sort.desc);
     });
   }
 
@@ -802,6 +1300,18 @@ extension UserIsarQuerySortThenBy
   QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByIsregistered() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isregistered', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByIsregisteredDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isregistered', Sort.desc);
     });
   }
 
@@ -827,6 +1337,30 @@ extension UserIsarQuerySortThenBy
       thenByLastRecordedStringDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastRecordedString', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'level', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByLevelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'level', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByPhotoURL() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoURL', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QAfterSortBy> thenByPhotoURLDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'photoURL', Sort.desc);
     });
   }
 
@@ -857,9 +1391,23 @@ extension UserIsarQuerySortThenBy
 
 extension UserIsarQueryWhereDistinct
     on QueryBuilder<UserIsar, UserIsar, QDistinct> {
-  QueryBuilder<UserIsar, UserIsar, QDistinct> distinctByDecidationLevel() {
+  QueryBuilder<UserIsar, UserIsar, QDistinct> distinctByDisplayName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'decidationLevel');
+      return query.addDistinctBy(r'displayName', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QDistinct> distinctByEmail(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'email', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QDistinct> distinctByIsregistered() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isregistered');
     });
   }
 
@@ -874,6 +1422,19 @@ extension UserIsarQueryWhereDistinct
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'lastRecordedString',
           caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QDistinct> distinctByLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'level');
+    });
+  }
+
+  QueryBuilder<UserIsar, UserIsar, QDistinct> distinctByPhotoURL(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'photoURL', caseSensitive: caseSensitive);
     });
   }
 
@@ -899,9 +1460,21 @@ extension UserIsarQueryProperty
     });
   }
 
-  QueryBuilder<UserIsar, int, QQueryOperations> decidationLevelProperty() {
+  QueryBuilder<UserIsar, String, QQueryOperations> displayNameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'decidationLevel');
+      return query.addPropertyName(r'displayName');
+    });
+  }
+
+  QueryBuilder<UserIsar, String, QQueryOperations> emailProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'email');
+    });
+  }
+
+  QueryBuilder<UserIsar, bool, QQueryOperations> isregisteredProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isregistered');
     });
   }
 
@@ -915,6 +1488,18 @@ extension UserIsarQueryProperty
       lastRecordedStringProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastRecordedString');
+    });
+  }
+
+  QueryBuilder<UserIsar, int, QQueryOperations> levelProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'level');
+    });
+  }
+
+  QueryBuilder<UserIsar, String, QQueryOperations> photoURLProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'photoURL');
     });
   }
 

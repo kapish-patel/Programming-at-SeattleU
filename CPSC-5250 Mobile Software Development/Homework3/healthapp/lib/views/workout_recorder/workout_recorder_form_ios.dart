@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/models/Data_Model/workout_model.dart';
-import 'package:healthapp/view-models/switcher_provider.dart';
 import 'package:healthapp/view-models/user_provider.dart';
 import 'package:healthapp/view-models/workout_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

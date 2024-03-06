@@ -56,5 +56,6 @@
     "volleyball": "Volleyball",
     "americanFootball": "American Football",
     "lawnTennis": "Lawn Tennis",
-    "pleaseEnter": "Please enter"
+    "pleaseEnter": "Please enter",
+    "duration": "Duration"
 }

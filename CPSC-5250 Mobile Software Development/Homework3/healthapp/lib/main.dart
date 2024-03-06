@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:healthapp/firebase_options.dart';
 import 'package:healthapp/models/Collections/diet_isar.dart';
 import 'package:healthapp/models/Collections/emotion_isar.dart';
 import 'package:healthapp/models/Collections/user_isar.dart';
@@ -22,13 +25,20 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Database.init();
   final isar = Database.isar; 
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );  
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create:(context) => DietProvider(DietRepository(isar.dietRecorderEventIsars))),
         ChangeNotifierProvider(create:(context) => EmotionProvider(EmotionRepository(isar.emotionRecorderEventIsars))),
         ChangeNotifierProvider(create:(context) => WorkoutProvider(WorkoutRepository(isar.workoutRecorderEventIsars))),
-        ChangeNotifierProvider(create:(context) => UserProvider(UserRepository(isar.userIsars))),
+        ChangeNotifierProvider(create:(context) => UserProvider(UserRepository(isar.userIsars), auth)),
         ChangeNotifierProvider(create: (context) => SwitcherProvider()),
       ],
       child: MyApp(isar: isar),
@@ -51,3 +61,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// bug fix for the app
+//1. multiple users are being created in the database when the same user is logged in 
+//2. update the leaderboard when user loggs in 
+//3. update the user if he/she have signed in for leaderboard
+//4. log out amd delete the users data if they opt out of the leaderboard

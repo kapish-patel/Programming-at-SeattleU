@@ -64,6 +64,6 @@ class MyApp extends StatelessWidget {
 
 
 // bug fix for the app
-//3. 
+//3.
 //4. log out and delete the users data if they opt out of the leaderboard
 //5. make static hash for the grader to check homework 

@@ -13,6 +13,8 @@ class UserProvider extends ChangeNotifier {
   late FirebaseAuth _auth;
   late StreamSubscription<User?> _authStateChangesSubscription;
   late StreamController<UserModel?> _userStreamController;
+  List<UserModel>? _leaderBoard;
+
 
 
   UserProvider(this._userRepository, FirebaseAuth auth) {
@@ -20,15 +22,17 @@ class UserProvider extends ChangeNotifier {
     _auth = auth;
     _userStreamController = StreamController<UserModel?>();
     _authStateChangesSubscription = _auth.authStateChanges().listen((User? user) async {
-      if (user != null) {
+      // if user variable have value then get user from firebase
+      if (user != null){
         // if user is signed is then get user from firebase
-        _user = _userRepository.getUserFromFirebase(user) as UserModel?;
+        _user = await _userRepository.getUserFromFirebase(user);
       } else {
         // else get user from local db
         _user = await _userRepository.getUser();
       }
       _userStreamController.add(_user);
     });
+    getLeaderboard();
   }
 
   // Get user
@@ -36,6 +40,10 @@ class UserProvider extends ChangeNotifier {
 
   // Get user stream
   Stream<UserModel?> get userStream => _userStreamController.stream;
+
+  // Get leaderboard
+  List<UserModel>? get leaderboard => _leaderBoard;
+
 
   // Add or update user
   Future<void> addUser(UserModel user) async {
@@ -51,7 +59,7 @@ class UserProvider extends ChangeNotifier {
 
   // Calculate points
   Future<void> calculatePoints(DateTime newTime, String newLastRecordedString) async {
-    final userModel = await user;
+    final userModel = user;
     int recordingPoints = userModel!.recordingPoints;
     DateTime lastRecorded = userModel.lastRecorded;
     String lastRecordedString = userModel.lastRecordedString;
@@ -80,6 +88,11 @@ class UserProvider extends ChangeNotifier {
     // Update the user
     addUser(userModel);
 
+    // Update the user in firebase
+    _userRepository.addUserToFirebase(userModel);
+
+    // update the leaderboard
+    getLeaderboard();
     // Notify listeners
     notifyListeners();
   }
@@ -101,20 +114,44 @@ class UserProvider extends ChangeNotifier {
         
         if (user != null) {
           // perform merge of local and firebase user data
-          UserModel newUserDetails = UserModel(
-            _user!.level,
-            _user!.recordingPoints,
-            _user!.lastRecorded,
-            _user!.lastRecordedString,
-            _user!.uuid,
-            true,
-            user.displayName!,
-            user.email!,
-            user.photoURL!);
-          // add user in isar db
-          addUser(newUserDetails);
-          // add user in firebase db
-          _userRepository.addUserToFirebase(newUserDetails);
+          // check if the user exists in the firebase db check with email
+          // get user data from firebase db
+
+          UserModel? firebaseUser = await _userRepository.getUserWithEmailFromFirebase(user);
+          if (firebaseUser != null) {
+            // if user exists in firebase db then update the user in local db
+            UserModel newUserDetails = UserModel(
+              firebaseUser.level,
+              firebaseUser.recordingPoints,
+              firebaseUser.lastRecorded,
+              firebaseUser.lastRecordedString,
+              firebaseUser.uuid,
+              true,
+              user.displayName!,
+              user.email!,
+              user.photoURL!);
+            // add user in isar db
+            addUser(newUserDetails);
+            notifyListeners();
+          }
+          else {
+            // if user does not exists in firebase db then add user in firebase db
+            UserModel newUserDetails = UserModel(
+              _user!.level,
+              _user!.recordingPoints,
+              _user!.lastRecorded,
+              _user!.lastRecordedString,
+              _user!.uuid,
+              true,
+              user.displayName!,
+              user.email!,
+              user.photoURL!);
+            // add user in isar db
+            addUser(newUserDetails);
+            // add user in firebase db
+            _userRepository.addUserToFirebase(newUserDetails);
+            notifyListeners();
+          }
         }
         else {
           print("Google Sign In Failed");
@@ -125,5 +162,10 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  // get leaderboard
+  Future<void> getLeaderboard() async {
+   _leaderBoard = await _userRepository.getLeaderboard();
+   notifyListeners();
+  }
   
 }

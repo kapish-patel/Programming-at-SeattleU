@@ -64,7 +64,6 @@ class MyApp extends StatelessWidget {
 
 
 // bug fix for the app
-//1. multiple users are being created in the database when the same user is logged in 
-//2. update the leaderboard when user loggs in 
-//3. update the user if he/she have signed in for leaderboard
-//4. log out amd delete the users data if they opt out of the leaderboard
+//3. 
+//4. log out and delete the users data if they opt out of the leaderboard
+//5. make static hash for the grader to check homework 

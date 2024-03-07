@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthapp/views/diet_recorder/diet_edit_page.dart';
+import 'package:healthapp/views/leaderboard/leaderboard_list.dart';
 import 'package:healthapp/views/leaderboard/leaderboard_page.dart';
+import 'package:healthapp/views/leaderboard/login_overlay.dart';
 import 'package:healthapp/views/login/login_page.dart';
 import 'package:healthapp/views/screens.dart';
 import 'package:healthapp/views/emotion_recorder/emotion_recorder_page.dart';
@@ -81,7 +83,24 @@ final goRouter = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: LeaderboardPage(),
               ),
-              //routes: [],
+              routes: [
+                GoRoute(
+                  path: 'list',
+                  pageBuilder: (context, state) {
+                    return const NoTransitionPage(
+                      child: LeaderboardList(),
+                    );
+                  } 
+                ),
+                GoRoute(
+                  path: 'login', 
+                  pageBuilder: (context, state) {
+                    return const NoTransitionPage(
+                      child: LoginOverlay(),
+                    );
+                  }
+                )
+              ],
             ),
           ],
         ),

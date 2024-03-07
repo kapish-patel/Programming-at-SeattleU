@@ -31,9 +31,9 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 50),
               // add Sign in with Google button
               InkWell(
-                onTap: () {
+                onTap: () async {
                   // sign in with google
-                  userProvider.signinWithGoogle();
+                  await userProvider.signinWithGoogle();
                   if (userProvider.user?.isregistered != false) {
                     goRouter.go('/leaderboard');
                   } 

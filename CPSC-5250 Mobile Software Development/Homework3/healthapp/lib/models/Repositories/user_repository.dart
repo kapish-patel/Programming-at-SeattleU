@@ -72,5 +72,55 @@ class UserRepository{
       }
     });
   }
+
+  Future<UserModel?> getUserWithEmailFromFirebase(User user) {
+    // Get user from firebase
+    CollectionReference userCollections = FirebaseFirestore.instance.collection('Users');
+    return userCollections.where('email', isEqualTo: user.email).get().then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        print("Successfully got user from firebase");
+        return UserModel(
+          querySnapshot.docs[0]['level'],
+          querySnapshot.docs[0]['recordingPoints'],
+          (querySnapshot.docs[0]['lastRecorded'] as Timestamp).toDate(), 
+          querySnapshot.docs[0]['lastRecordedString'], 
+          querySnapshot.docs[0]['uuid'], 
+          querySnapshot.docs[0]['isregistered'], 
+          querySnapshot.docs[0]['displayName'], 
+          querySnapshot.docs[0]['email'], 
+          querySnapshot.docs[0]['photoURL']);
+      } else {
+        return null;
+      }
+    });
+  }
+
+  Future<List<UserModel>> getLeaderboard() async {
+  try {
+    CollectionReference userCollections = FirebaseFirestore.instance.collection('Users');
+    QuerySnapshot querySnapshot = await userCollections.orderBy('level', descending: true).orderBy('recordingPoints', descending: true).get();
+    List<UserModel> leaderboard = [];
+
+    querySnapshot.docs.forEach((doc) {
+      leaderboard.add(UserModel(
+        doc['level'],
+        doc['recordingPoints'],
+        (doc['lastRecorded'] as Timestamp).toDate(), 
+        doc['lastRecordedString'], 
+        doc['uuid'], 
+        doc['isregistered'], 
+        doc['displayName'], 
+        doc['email'], 
+        doc['photoURL']
+      ));
+    });
+
+    return leaderboard;
+  } catch (e) {
+    print('Error fetching leaderboard: $e');
+    return []; // Return an empty list in case of an error
+  }
+}
+
   
 }

@@ -75,7 +75,7 @@ This repository contains assignments and projects that I have worked on while st
   </tr>
   <tr>
     <td><a href="./CPSC-5200 Software Architecture and Design">CPSC 5200</a></td>
-    <td>Mobile Software Development</td>
+    <td>Software Architecture and Design</td>
     <td>Spring 2024</td>
   </tr>
 </table>

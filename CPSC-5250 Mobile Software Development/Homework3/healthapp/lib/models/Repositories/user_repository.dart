@@ -96,31 +96,44 @@ class UserRepository{
   }
 
   Future<List<UserModel>> getLeaderboard() async {
-  try {
-    CollectionReference userCollections = FirebaseFirestore.instance.collection('Users');
-    QuerySnapshot querySnapshot = await userCollections.orderBy('level', descending: true).orderBy('recordingPoints', descending: true).get();
-    List<UserModel> leaderboard = [];
+    try {
+      CollectionReference userCollections = FirebaseFirestore.instance.collection('Users');
+      QuerySnapshot querySnapshot = await userCollections.orderBy('level', descending: true).orderBy('recordingPoints', descending: true).get();
+      List<UserModel> leaderboard = [];
 
-    querySnapshot.docs.forEach((doc) {
-      leaderboard.add(UserModel(
-        doc['level'],
-        doc['recordingPoints'],
-        (doc['lastRecorded'] as Timestamp).toDate(), 
-        doc['lastRecordedString'], 
-        doc['uuid'], 
-        doc['isregistered'], 
-        doc['displayName'], 
-        doc['email'], 
-        doc['photoURL']
-      ));
-    });
+      querySnapshot.docs.forEach((doc) {
+        leaderboard.add(UserModel(
+          doc['level'],
+          doc['recordingPoints'],
+          (doc['lastRecorded'] as Timestamp).toDate(), 
+          doc['lastRecordedString'], 
+          doc['uuid'], 
+          doc['isregistered'], 
+          doc['displayName'], 
+          doc['email'], 
+          doc['photoURL']
+        ));
+      });
 
-    return leaderboard;
-  } catch (e) {
-    print('Error fetching leaderboard: $e');
-    return []; // Return an empty list in case of an error
+      return leaderboard;
+    } catch (e) {
+      print('Error fetching leaderboard: $e');
+      return []; // Return an empty list in case of an error
+    }
   }
-}
 
-  
+ Future<bool> deleteUserFromFirebase(String uuid) async {
+    try {
+      // Delete user from firebase
+      CollectionReference userCollections = FirebaseFirestore.instance.collection('Users');
+      await userCollections.doc(uuid).delete();
+      // Return true if deletion is successful
+      return true;
+    } catch (e) {
+      // Handle any errors
+      print("Error deleting user: $e");
+      // Return false if deletion fails
+      return false;
+    }
+  }
 }
